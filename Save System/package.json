@@ -1,0 +1,22 @@
+{
+  "name": "com.twinstudios.savesystem",
+  "displayName": "Save System",
+  "author": {
+    "name": "TwinStudios",
+    "url": "https://www.twin-studios.com"
+  },
+  "version": "0.0.1",
+  "unity": "2022.3",
+  "description": "Provides an easy way to save your game with Unity.",
+  "keywords": [
+    "Save",
+    "PlayerData",
+    "Slots"
+  ],
+  "license": "MIT",
+  "category": "Save",
+  "dependencies": {
+    "com.cysharp.unitask": "",
+    "com.unity.test-framework": ""
+  }
+}
