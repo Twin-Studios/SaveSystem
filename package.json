@@ -17,6 +17,6 @@
   "category": "Save",
   "dependencies": {
     "com.cysharp.unitask": "3.x",
-    "com.unity.test-framework": "1.1.x"
+    "com.unity.test-framework": "1.1.33"
   }
 }
