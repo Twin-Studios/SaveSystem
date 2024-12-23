@@ -16,7 +16,7 @@
   "license": "MIT",
   "category": "Save",
   "dependencies": {
-    "com.cysharp.unitask": "",
-    "com.unity.test-framework": ""
+    "com.cysharp.unitask": "3.x",
+    "com.unity.test-framework": "1.1.x"
   }
 }
