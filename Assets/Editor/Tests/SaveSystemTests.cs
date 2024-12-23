@@ -184,7 +184,7 @@ public class SaveSystemTests
 	[UnityTest]
 	public IEnumerator SaveAndRead_ExistingScriptableObject() => UniTask.ToCoroutine(async () =>
 	{
-		var asset = AssetDatabase.LoadAssetAtPath<SampleSaveGame>("Packages/com.twinstudios.savesystem/Editor/Tests/SampleSaveGame.asset");
+		var asset = AssetDatabase.LoadAssetAtPath<SampleSaveGame>("Assets/Editor/Tests/SampleSaveGame.asset");
 
 		SampleSaveService sampleSaveService = new SampleSaveService();
 

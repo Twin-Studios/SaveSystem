@@ -1,14 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Cysharp.Threading.Tasks;
-using UnityEngine.Playables;
 using System.IO;
-using System;
 using System.Collections.ObjectModel;
 using twinstudios.OdinSerializer;
-using System.Xml.Linq;
-using UnityEditor.Graphs;
+using System.Threading.Tasks;
 
 namespace TwinStudios.SaveSystem
 {
@@ -16,7 +11,7 @@ namespace TwinStudios.SaveSystem
 	{
 		private const string SAVE_GAME_NAME = "savegame";
 
-		public async UniTask SaveDataAsync(TSaveGame saveGame, int slot)
+		public async Task SaveDataAsync(TSaveGame saveGame, int slot)
 		{
 			byte[] bytes = SerializationUtility.SerializeValue(saveGame, DataFormat.JSON);
 			await File.WriteAllBytesAsync(GetSaveGamePath(slot), bytes);
@@ -46,7 +41,7 @@ namespace TwinStudios.SaveSystem
 			}
 		}
 
-		public async UniTask<TSaveGame> ReadSaveGameAsync(int slot)
+		public async Task<TSaveGame> ReadSaveGameAsync(int slot)
 		{
 			string slotFilePath = GetSaveGamePath(slot);
 
@@ -59,7 +54,7 @@ namespace TwinStudios.SaveSystem
 			return SerializationUtility.DeserializeValue<TSaveGame>(bytes, DataFormat.JSON);		
 		}		
 
-		public async UniTask<ReadOnlyDictionary<int, TSaveGame>> ReadAllSaveGamesAsync()
+		public async Task<ReadOnlyDictionary<int, TSaveGame>> ReadAllSaveGamesAsync()
 		{
 			Dictionary<int, TSaveGame> saveGames = new Dictionary<int, TSaveGame>();
 
