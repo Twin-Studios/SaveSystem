@@ -1,6 +1,6 @@
 # This .gitignore file should be placed at the root of your Unity project directory
 #
-# Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
+# Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
 /[Ll]ibrary/
 /[Tt]emp/
@@ -14,8 +14,8 @@
 # They also could contain extremely sensitive data
 /[Mm]emoryCaptures/
 
-# Asset meta data should only be ignored when the corresponding asset is also ignored
-!/[Aa]ssets/**/*.meta
+# Recordings can get excessive in size
+/[Rr]ecordings/
 
 # Uncomment this line if you wish to ignore the asset store tools plugin
 # /[Aa]ssets/AssetStoreTools*
@@ -59,7 +59,8 @@ sysinfo.txt
 *.apk
 *.aab
 *.unitypackage
-*.unitypackage.Meta
+*.unitypackage.meta
+*.app
 
 # Crashlytics generated file
 crashlytics-build.properties
@@ -70,32 +71,3 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
-
-#End unity oficial gitignore
-
-#Custom
-Assets/_local
-
-FirebaseCppApp-6_9_0.so
-FirebaseCppApp-6_9_0.so.meta
-Assets/StreamingAssets/google-services-desktop.json.meta
-Assets/Game Configurations.meta
-Assets/Firebase/Plugins/link.xml_DISABLED.meta
-Assets/Firebase/Plugins/link.xml.meta
-Assets/EasyMobile/Packages/PlayMakerActions.meta
-remote_config_data
-
-Assets/Plugins/Android/Firebase/
-Assets/Plugins/Android/Firebase.meta
-
-ServerData/
-Recordings/
-Assets/Gizmos/Cinemachine/cm_logo_lg.png
-ProjectSettings/EditorSettings.asset
-
-/UACreatives/
-Assets/Plugins/Zenject/Source/Zenject.csproj.meta
-Assets/Plugins/Zenject/OptionalExtras/Signals/Zenject-Signals.csproj.meta
-Assets/Plugins/Zenject/OptionalExtras/ReflectionBaking/Zenject-ReflectionBaking.csproj.meta
-Assets/Plugins/Android/FirebaseCrashlytics.androidlib/res/values/crashlytics_build_id.xml
-*.bundle
