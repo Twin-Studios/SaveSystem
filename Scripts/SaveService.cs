@@ -18,7 +18,7 @@ namespace TwinStudios.SaveSystem
 
 		public async UniTask SaveDataAsync(TSaveGame saveGame, int slot)
 		{
-			byte[] bytes = SerializationUtility.SerializeValue(saveGame, DataFormat.Binary);
+			byte[] bytes = SerializationUtility.SerializeValue(saveGame, DataFormat.JSON);
 			await File.WriteAllBytesAsync(GetSaveGamePath(slot), bytes);
 		}
 
@@ -56,7 +56,7 @@ namespace TwinStudios.SaveSystem
 			}
 
 			byte[] bytes = await File.ReadAllBytesAsync(slotFilePath);
-			return SerializationUtility.DeserializeValue<TSaveGame>(bytes, DataFormat.Binary);		
+			return SerializationUtility.DeserializeValue<TSaveGame>(bytes, DataFormat.JSON);		
 		}		
 
 		public async UniTask<ReadOnlyDictionary<int, TSaveGame>> ReadAllSaveGamesAsync()
