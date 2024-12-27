@@ -47,7 +47,7 @@ public class SaveSystemTests
 	[UnityTest]
 	public IEnumerator SaveAndRead_ComplexClassData() => UniTask.ToCoroutine(async () =>
 	{
-		var sampleSaveService = new SaveService<ComplexSaveData>();
+		var sampleSaveService = new SaveService<ComplexSaveData>(Application.persistentDataPath);
 
 		ComplexSaveData sampleSaveGame = new ComplexSaveData();
 		sampleSaveGame.SessionCount = 1;
@@ -113,7 +113,7 @@ public class SaveSystemTests
 	[UnityTest]
 	public IEnumerator SaveAndRead_PropertyClass() => UniTask.ToCoroutine(async () =>
 	{
-		var sampleSaveService = new SaveService<SaveDataProperties>();
+		var sampleSaveService = new SaveService<SaveDataProperties>(Application.persistentDataPath);
 
 		SaveDataProperties sampleSaveGame = new SaveDataProperties();
 		sampleSaveGame.CurrentMoney = 100;
@@ -141,7 +141,7 @@ public class SaveSystemTests
 	[UnityTest]
 	public IEnumerator SaveAndRead_PropertyClass_Dictionary() => UniTask.ToCoroutine(async () =>
 	{
-		var sampleSaveService = new SaveService<ClassWithDictionary>();
+		var sampleSaveService = new SaveService<ClassWithDictionary>(Application.persistentDataPath);
 
 		ClassWithDictionary sampleSaveGame = new ClassWithDictionary();
 		sampleSaveGame.Items = new Dictionary<string, ClassWithProperties>
@@ -186,7 +186,7 @@ public class SaveSystemTests
 	{
 		var asset = AssetDatabase.LoadAssetAtPath<SampleSaveGame>("Assets/Editor/Tests/SampleSaveGame.asset");
 
-		SampleSaveService sampleSaveService = new SampleSaveService();
+		SampleSaveService sampleSaveService = new SampleSaveService(Application.persistentDataPath);
 
 		await sampleSaveService.SaveDataAsync(asset, 0);
 
@@ -205,7 +205,7 @@ public class SaveSystemTests
 	[UnityTest]
 	public IEnumerator SaveAndRead_InstantiatedScriptableObject() => UniTask.ToCoroutine(async () =>
 	{
-		SampleSaveService sampleSaveService = new SampleSaveService();
+		SampleSaveService sampleSaveService = new SampleSaveService(Application.persistentDataPath);
 
 		SampleSaveGame sampleSaveGame = ScriptableObject.CreateInstance<SampleSaveGame>();
 		sampleSaveGame.PlayerName = "TestPlayer";
@@ -232,7 +232,7 @@ public class SaveSystemTests
 	[UnityTest]
 	public IEnumerator SaveAndRead_PlainClass() => UniTask.ToCoroutine(async () =>
 	{
-		var sampleSaveService = new SampleSaveServiceNormalClass();
+		var sampleSaveService = new SampleSaveServiceNormalClass(Application.persistentDataPath);
 
 		SampleSaveGameNormalClass sampleSaveGame = new SampleSaveGameNormalClass();
 		sampleSaveGame.PlayerName = "TestPlayer";
@@ -260,7 +260,7 @@ public class SaveSystemTests
 	[UnityTest]
 	public IEnumerator GetAllSlots_ReturnsAllSlotsCorrectly() => UniTask.ToCoroutine(async () =>
 	{
-		var sampleSaveService = new SampleSaveServiceNormalClass();
+		var sampleSaveService = new SampleSaveServiceNormalClass(Application.persistentDataPath);
 
 		SampleSaveGameNormalClass sampleSaveGame = new SampleSaveGameNormalClass();
 		sampleSaveGame.PlayerName = "TestPlayer";
@@ -286,7 +286,7 @@ public class SaveSystemTests
 	[UnityTest]
 	public IEnumerator DeleteSlots() => UniTask.ToCoroutine(async () =>
 	{
-		var sampleSaveService = new SampleSaveServiceNormalClass();
+		var sampleSaveService = new SampleSaveServiceNormalClass(Application.persistentDataPath);
 
 		SampleSaveGameNormalClass sampleSaveGame = new SampleSaveGameNormalClass();
 		sampleSaveGame.PlayerName = "TestPlayer";
@@ -315,7 +315,7 @@ public class SaveSystemTests
 	[UnityTest]
 	public IEnumerator SaveGameDataCreatesAnSlot() => UniTask.ToCoroutine(async () =>
 	{
-		var sampleSaveService = new SampleSaveServiceNormalClass();
+		var sampleSaveService = new SampleSaveServiceNormalClass(Application.persistentDataPath);
 
 		SampleSaveGameNormalClass sampleSaveGame = new SampleSaveGameNormalClass();
 		sampleSaveGame.PlayerName = "TestPlayer";

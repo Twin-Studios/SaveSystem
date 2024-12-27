@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
 using System.IO;
 using System.Collections.ObjectModel;
 using twinstudios.OdinSerializer;
@@ -11,9 +10,18 @@ namespace TwinStudios.SaveSystem
 	{
 		private const string SAVE_GAME_NAME = "savegame";
 
-		public async Task SaveDataAsync(TSaveGame saveGame, int slot)
+		private string _baseSavePath;
+		private DataFormat _format;
+
+		public SaveService(string baseSavePath, DataFormat format = DataFormat.JSON)
+        {
+			_baseSavePath = baseSavePath;
+			_format = format;
+		}
+
+        public async Task SaveDataAsync(TSaveGame saveGame, int slot)
 		{
-			byte[] bytes = SerializationUtility.SerializeValue(saveGame, DataFormat.JSON);
+			byte[] bytes = SerializationUtility.SerializeValue(saveGame, _format);
 			await File.WriteAllBytesAsync(GetSaveGamePath(slot), bytes);
 		}
 
@@ -51,7 +59,7 @@ namespace TwinStudios.SaveSystem
 			}
 
 			byte[] bytes = await File.ReadAllBytesAsync(slotFilePath);
-			return SerializationUtility.DeserializeValue<TSaveGame>(bytes, DataFormat.JSON);		
+			return SerializationUtility.DeserializeValue<TSaveGame>(bytes, _format);		
 		}		
 
 		public async Task<ReadOnlyDictionary<int, TSaveGame>> ReadAllSaveGamesAsync()
@@ -70,7 +78,7 @@ namespace TwinStudios.SaveSystem
 
 		public HashSet<int> GetExistingSlots()
 		{
-			string directory = Application.persistentDataPath;
+			string directory = _baseSavePath;
 			string searchPattern = $"{SAVE_GAME_NAME}_*.data";
 
 			// Get all save files matching the pattern
@@ -99,7 +107,7 @@ namespace TwinStudios.SaveSystem
 
 		private string GetSaveGamePath(int slot)
 		{
-			return Application.persistentDataPath + $"/{SAVE_GAME_NAME}_{slot}.data";
+			return _baseSavePath + $"/{SAVE_GAME_NAME}_{slot}.data";
 		}
 	}
 }
