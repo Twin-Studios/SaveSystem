@@ -1,25 +1,30 @@
 using System.Collections.Generic;
-using System.IO;
 using System.Collections.ObjectModel;
-using twinstudios.OdinSerializer;
+using System.IO;
 using System.Threading.Tasks;
+using twinstudios.OdinSerializer;
 
 namespace TwinStudios.SaveSystem
 {
 	public class SaveService<TSaveGame> where TSaveGame : class
 	{
-		private const string SAVE_GAME_NAME = "savegame";
+		private string _saveGameName = "savegame";
 
 		private string _baseSavePath;
 		private DataFormat _format;
 
-		public SaveService(string baseSavePath, DataFormat format = DataFormat.JSON)
-        {
+		public SaveService(string baseSavePath, DataFormat format = DataFormat.JSON, string saveGameName = "savegame")
+		{
 			_baseSavePath = baseSavePath;
 			_format = format;
+
+			if (!Directory.Exists(_baseSavePath))
+			{
+				Directory.CreateDirectory(_baseSavePath);
+			}
 		}
 
-        public async Task SaveDataAsync(TSaveGame saveGame, int slot)
+		public async Task SaveDataAsync(TSaveGame saveGame, int slot)
 		{
 			byte[] bytes = SerializationUtility.SerializeValue(saveGame, _format);
 			await File.WriteAllBytesAsync(GetSaveGamePath(slot), bytes);
@@ -59,14 +64,14 @@ namespace TwinStudios.SaveSystem
 			}
 
 			byte[] bytes = await File.ReadAllBytesAsync(slotFilePath);
-			return SerializationUtility.DeserializeValue<TSaveGame>(bytes, _format);		
-		}		
+			return SerializationUtility.DeserializeValue<TSaveGame>(bytes, _format);
+		}
 
 		public async Task<ReadOnlyDictionary<int, TSaveGame>> ReadAllSaveGamesAsync()
 		{
-			Dictionary<int, TSaveGame> saveGames = new Dictionary<int, TSaveGame>();
+			Dictionary<int, TSaveGame> saveGames = new();
 
-			foreach (var slotNumber in GetExistingSlots())
+			foreach (int slotNumber in GetExistingSlots())
 			{
 				TSaveGame saveGame = await ReadSaveGameAsync(slotNumber);
 
@@ -79,21 +84,21 @@ namespace TwinStudios.SaveSystem
 		public HashSet<int> GetExistingSlots()
 		{
 			string directory = _baseSavePath;
-			string searchPattern = $"{SAVE_GAME_NAME}_*.data";
+			string searchPattern = $"{_saveGameName}_*.data";
 
 			// Get all save files matching the pattern
 			string[] saveFiles = Directory.GetFiles(directory, searchPattern);
 
-			HashSet<int> slotNumbers = new HashSet<int>();
+			HashSet<int> slotNumbers = new();
 
 			foreach (string filePath in saveFiles)
 			{
 				// Extract the slot number from the file name
 				string fileName = Path.GetFileNameWithoutExtension(filePath);
 
-				if (fileName.StartsWith(SAVE_GAME_NAME + "_"))
+				if (fileName.StartsWith(_saveGameName + "_"))
 				{
-					string slotString = fileName.Substring((SAVE_GAME_NAME + "_").Length);
+					string slotString = fileName.Substring((_saveGameName + "_").Length);
 
 					if (int.TryParse(slotString, out int slot))
 					{
@@ -107,7 +112,7 @@ namespace TwinStudios.SaveSystem
 
 		private string GetSaveGamePath(int slot)
 		{
-			return _baseSavePath + $"/{SAVE_GAME_NAME}_{slot}.data";
+			return _baseSavePath + $"/{_saveGameName}_{slot}.data";
 		}
 	}
 }
