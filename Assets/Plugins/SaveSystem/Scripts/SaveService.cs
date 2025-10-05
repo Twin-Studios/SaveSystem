@@ -17,6 +17,7 @@ namespace TwinStudios.SaveSystem
 		{
 			_baseSavePath = baseSavePath;
 			_format = format;
+			_saveGameName = saveGameName;
 
 			if (!Directory.Exists(_baseSavePath))
 			{

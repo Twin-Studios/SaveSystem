@@ -5,7 +5,7 @@
     "name": "TwinStudios",
     "url": "https://www.twin-studios.com"
   },
-  "version": "0.0.6",
+  "version": "0.0.7",
   "unity": "6000.1",
   "description": "Provides an easy way to save your game with Unity.",
   "keywords": [
